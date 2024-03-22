@@ -1,10 +1,11 @@
-package br.com.alura.resource.request;
+package br.com.alura.resource.response;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import br.com.alura.model.CourseStatus;
 
-public class CourseRequest implements Serializable {
+public class CourseResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -12,11 +13,15 @@ public class CourseRequest implements Serializable {
 
 	private String code;
 
-	private String instructorUsername;
-
 	private String description;
 
 	private CourseStatus status;
+
+	private LocalDate insertDate;
+
+	private LocalDate inactivateDate;
+
+	private int nps;
 
 	public String getName() {
 		return name;
@@ -34,14 +39,6 @@ public class CourseRequest implements Serializable {
 		this.code = code;
 	}
 
-	public String getInstructorUsername() {
-		return instructorUsername;
-	}
-
-	public void setInstructorUsername(String instructorUsername) {
-		this.instructorUsername = instructorUsername;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -56,5 +53,29 @@ public class CourseRequest implements Serializable {
 
 	public void setStatus(CourseStatus status) {
 		this.status = status;
+	}
+
+	public LocalDate getInsertDate() {
+		return insertDate;
+	}
+
+	public void setInsertDate(LocalDate insertDate) {
+		this.insertDate = insertDate;
+	}
+
+	public LocalDate getInactivateDate() {
+		return inactivateDate;
+	}
+
+	public void setInactivateDate(LocalDate inactivateDate) {
+		this.inactivateDate = inactivateDate;
+	}
+
+	public int getNps() {
+		return nps;
+	}
+
+	public void setNps(int nps) {
+		this.nps = nps;
 	}
 }
