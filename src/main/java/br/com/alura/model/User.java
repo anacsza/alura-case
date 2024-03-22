@@ -13,7 +13,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -21,22 +20,22 @@ import jakarta.validation.constraints.NotBlank;
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
 	private String name;
-	
+
 	@NotBlank
 	private String username;
-	
+
 	@Enumerated(EnumType.STRING)
 	@NotBlank
 	private UserRole role;
-	
+
 	@Column(name = "insert_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
-	private LocalDate insertDate; 
+	private LocalDate insertDate;
 }
