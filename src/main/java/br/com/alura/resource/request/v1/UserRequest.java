@@ -1,16 +1,20 @@
-package br.com.alura.resource.response;
+package br.com.alura.resource.request.v1;
 
 import java.io.Serializable;
 
 import br.com.alura.model.UserRole;
 
-public class UserResponse implements Serializable {
+public class UserRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private String name;
 
+	private String username;
+
 	private String email;
+
+	private String password;
 
 	private UserRole role;
 
@@ -22,12 +26,28 @@ public class UserResponse implements Serializable {
 		this.name = name;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public UserRole getRole() {
@@ -37,5 +57,4 @@ public class UserResponse implements Serializable {
 	public void setRole(UserRole role) {
 		this.role = role;
 	}
-
 }

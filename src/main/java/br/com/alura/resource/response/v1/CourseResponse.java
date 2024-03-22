@@ -1,4 +1,4 @@
-package br.com.alura.resource.response;
+package br.com.alura.resource.response.v1;
 
 import java.io.Serializable;
 import java.time.LocalDate;

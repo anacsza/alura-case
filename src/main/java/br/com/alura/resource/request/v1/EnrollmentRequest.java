@@ -1,4 +1,4 @@
-package br.com.alura.resource.request;
+package br.com.alura.resource.request.v1;
 
 import java.io.Serializable;
 
