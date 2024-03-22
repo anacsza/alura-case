@@ -36,4 +36,28 @@ public class Enrollment implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "course_id")
 	private Course course;
+
+	public LocalDate getEnrollmentDate() {
+		return enrollmentDate;
+	}
+
+	public void setEnrollmentDate(LocalDate enrollmentDate) {
+		this.enrollmentDate = enrollmentDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
 }

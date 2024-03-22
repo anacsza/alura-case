@@ -33,6 +33,8 @@ public class Course implements Serializable {
 	@NotBlank
 	private String code;
 
+	private String description;
+
 	@Enumerated(EnumType.STRING)
 	@NotBlank
 	private CourseStatus status;
@@ -48,4 +50,61 @@ public class Course implements Serializable {
 	@OneToOne
 	@JoinColumn(referencedColumnName = "id", name = "user_id", nullable = false)
 	private User user;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public CourseStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(CourseStatus status) {
+		this.status = status;
+	}
+
+	public LocalDate getInsertDate() {
+		return insertDate;
+	}
+
+	public void setInsertDate(LocalDate insertDate) {
+		this.insertDate = insertDate;
+	}
+
+	public LocalDate getInactivateDate() {
+		return inactivateDate;
+	}
+
+	public void setInactivateDate(LocalDate inactivateDate) {
+		this.inactivateDate = inactivateDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }
