@@ -3,19 +3,38 @@ package br.com.alura.resource.request.v1;
 import java.io.Serializable;
 
 import br.com.alura.model.UserRole;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Pattern.Flag;
 
 public class UserRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotNull
+	@NotBlank
 	private String name;
 
+	@NotNull
+	@NotBlank
+	@Pattern(regexp = "[a-z]{1,20}$", flags = Flag.CASE_INSENSITIVE)
 	private String username;
 
+	@NotNull
+	@NotBlank
+	@Email
 	private String email;
 
+	@NotNull
+	@NotBlank
 	private String password;
 
+	@NotNull
+	@Enumerated(EnumType.STRING)
 	private UserRole role;
 
 	public String getName() {

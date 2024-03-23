@@ -5,6 +5,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.NoSuchAlgorithmException;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,8 @@ public class UserResource {
 	private UserService userService;
 
 	@PostMapping
-	public ResponseEntity<?> createUser(@Valid @RequestBody UserRequest userRequest) throws URISyntaxException {
+	public ResponseEntity<?> createUser(@Valid @RequestBody UserRequest userRequest)
+			throws URISyntaxException, NoSuchAlgorithmException {
 		LOGGER.info("createUser name={}", userRequest.toString());
 		userService.createUser(userRequest);
 		return ResponseEntity.created(new URI("v1/users?username=" + userRequest.getUsername())).build();

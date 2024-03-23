@@ -12,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.alura.helper.enrollment.EnrollmentHelper;
 import br.com.alura.model.Course;
+import br.com.alura.model.CourseStatus;
+import br.com.alura.model.Enrollment;
 import br.com.alura.model.User;
 import br.com.alura.repository.course.CourseRepository;
 import br.com.alura.repository.enrollment.EnrollmentRepository;
@@ -43,6 +45,14 @@ public class EnrollmentService {
 		Optional<Course> course = courseRepository.findByCode(enrollmentRequest.getCode());
 		if (course.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrato");
+		}
+		if (course.get().getStatus().equals(CourseStatus.INACTIVE)) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Matricula não permitida, curso inativo");
+		}
+		Optional<Enrollment> enrollmentFounded = enrollmentRepository.findByUser(user.get());
+		if (enrollmentFounded.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"Usuario não pode matricular-se em mais de um curso");
 		}
 		enrollmentRepository.save(enrollmentHelper.createEnrollment(course.get(), user.get()));
 	}

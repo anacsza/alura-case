@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS user (
     name VARCHAR(100) NOT NULL,
     username VARCHAR(20) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     role ENUM('STUDENT', 'INSTRUCTOR', 'ADMIN') NOT NULL,
     insert_date DATETIME NOT NULL,
     PRIMARY KEY(id)
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS course (
     description VARCHAR(255),
     status ENUM('ACTIVE', 'INACTIVE') NOT NULL,
     insert_date DATETIME NOT NULL,
-    inactivate_date DATETIME NOT NULL,
+    inactivate_date DATETIME,
     PRIMARY KEY(id),
     FOREIGN KEY (user_id) REFERENCES user (id)
 );

@@ -2,16 +2,13 @@ package br.com.alura.service.course;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import br.com.alura.helper.course.CourseHelper;
 import br.com.alura.model.Course;
@@ -38,27 +35,21 @@ public class CourseService {
 
 	public void createCourse(CourseRequest courseRequest) {
 		LOGGER.info("createCourse name={}", courseRequest.getName());
-		Optional<User> user = userRepository.findByUsername(courseRequest.getInstructorUsername());
-		courseRepository.save(courseHelper.createCourse(courseRequest, user));
+		courseHelper.validateUserRequest(courseRequest);
+		Optional<User> userFounded = userRepository.findByUsername(courseRequest.getInstructorUsername());
+		Optional<Course> courseFounded = courseRepository.findByCode(courseRequest.getCode());
+		courseRepository.save(courseHelper.createCourse(courseRequest, userFounded, courseFounded));
 	}
 
 	public void changeCourseStatus(String code) {
 		LOGGER.info("changeCourseStatus code={}", code);
 		Optional<Course> course = courseRepository.findByCode(code);
-		if (course.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrado");
-		}
-		if (course.get().getStatus() == CourseStatus.INACTIVE) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Curso já inativado");
-		}
-		course.get().setStatus(CourseStatus.INACTIVE);
-		course.get().setInactivateDate(LocalDateTime.now(ZoneId.of("UTC")));
-		courseRepository.save(course.get());
+		courseRepository.save(courseHelper.updateCourseStatus(course));
 	}
 
-	public List<CourseResponse> getCourseList(CourseStatus status) {
+	public Page<CourseResponse> getCourseList(CourseStatus status, int page, int limit) {
 		LOGGER.info("getCourseList status={}", status);
-		List<Course> courseList = courseRepository.findByStatus(status);
+		Page<Course> courseList = courseRepository.findByStatus(status, PageRequest.of(page, limit));
 		return courseHelper.createCourseResponse(courseList);
 	}
 

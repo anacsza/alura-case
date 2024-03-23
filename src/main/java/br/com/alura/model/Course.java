@@ -15,8 +15,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "course")
@@ -28,16 +26,13 @@ public class Course implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank
 	private String name;
 
-	@NotBlank
 	private String code;
 
 	private String description;
 
 	@Enumerated(EnumType.STRING)
-	@NotNull
 	private CourseStatus status;
 
 	@Column(name = "insert_date")

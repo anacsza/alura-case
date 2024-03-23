@@ -5,10 +5,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -49,9 +49,11 @@ public class CourseResource {
 	}
 
 	@GetMapping
-	public ResponseEntity<BaseResponse<List<CourseResponse>>> getCourseList(@Valid @RequestParam CourseStatus status) {
+	public ResponseEntity<BaseResponse<Page<CourseResponse>>> getCourseList(@Valid @RequestParam CourseStatus status,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "limit", defaultValue = "10") int limit) {
 		LOGGER.info("getCourseList status={}", status);
-		List<CourseResponse> courseList = courseService.getCourseList(status);
+		Page<CourseResponse> courseList = courseService.getCourseList(status, page, limit);
 		return ResponseEntity.ok(new BaseResponse<>(courseList));
 	}
 }
