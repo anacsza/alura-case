@@ -19,6 +19,7 @@ import br.com.alura.repository.course.CourseRepository;
 import br.com.alura.repository.enrollment.EnrollmentRepository;
 import br.com.alura.repository.user.UserRepository;
 import br.com.alura.resource.request.v1.EnrollmentRequest;
+import br.com.alura.resource.request.v1.EnrollmentScoreRequest;
 
 @Service
 public class EnrollmentService {
@@ -49,11 +50,38 @@ public class EnrollmentService {
 		if (course.get().getStatus().equals(CourseStatus.INACTIVE)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Matricula não permitida, curso inativo");
 		}
-		Optional<Enrollment> enrollmentFounded = enrollmentRepository.findByUser(user.get());
+		Optional<Enrollment> enrollmentFounded = enrollmentRepository.findByUserAndCourse(user.get(), course.get());
 		if (enrollmentFounded.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 					"Usuario não pode matricular-se em mais de um curso");
 		}
 		enrollmentRepository.save(enrollmentHelper.createEnrollment(course.get(), user.get()));
+	}
+
+	public void createEnrollmentScore(EnrollmentScoreRequest enrollmentScoreRequest) {
+		LOGGER.info("createEnrollmentScore enrollmentScoreRequest={}", enrollmentScoreRequest.toString());
+		enrollmentHelper.validateEnrollmentRequest(enrollmentScoreRequest);
+		Optional<User> user = userRepository.findByUsername(enrollmentScoreRequest.getUsername());
+		if (user.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrato");
+		}
+		Optional<Course> course = courseRepository.findByCode(enrollmentScoreRequest.getCode());
+		if (course.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrato");
+		}
+		Optional<Enrollment> enrollmentFounded = enrollmentRepository.findByUserAndCourse(user.get(), course.get());
+		if (enrollmentFounded.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Matrícula não encontrada");
+		}
+		enrollmentFounded.get().setScore(enrollmentScoreRequest.getScore());
+		enrollmentFounded.get().setScoreDescription(enrollmentScoreRequest.getScoreDescription());
+		enrollmentRepository.save(enrollmentFounded.get());
+		sendFeedbackEmail(enrollmentFounded.get());
+	}
+
+	private void sendFeedbackEmail(Enrollment enrollment) {
+		LOGGER.info("Simulating sending email to [%s]:\n".formatted(enrollment.getCourse().getUser().getEmail()));
+		LOGGER.info("Subject: %s Body: %s".formatted(enrollment.getCourse().getUser().getEmail(),
+				enrollment.getScoreDescription()));
 	}
 }

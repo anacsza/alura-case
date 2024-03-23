@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alura.resource.request.v1.EnrollmentRequest;
+import br.com.alura.resource.request.v1.EnrollmentScoreRequest;
 import br.com.alura.service.enrollment.EnrollmentService;
 import jakarta.validation.Valid;
 
@@ -26,8 +27,15 @@ public class EnrollmentResource {
 
 	@PostMapping
 	public ResponseEntity<?> createEnrollment(@Valid @RequestBody EnrollmentRequest enrollmentRequest) {
-		LOGGER.info("createEnrollment username={}", enrollmentRequest.getUsername());
+		LOGGER.info("createEnrollment enrollmentRequest={}", enrollmentRequest.toString());
 		enrollmentService.createEnrollment(enrollmentRequest);
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping(path = "/feedbacks")
+	public ResponseEntity<?> createEnrollmentScore(@Valid @RequestBody EnrollmentScoreRequest enrollmentScoreRequest) {
+		LOGGER.info("createEnrollment enrollmentScoreRequest={}", enrollmentScoreRequest.toString());
+		enrollmentService.createEnrollmentScore(enrollmentScoreRequest);
 		return ResponseEntity.ok().build();
 	}
 }

@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Pattern.Flag;
+import jakarta.validation.constraints.Size;
 
 public class UserRequest implements Serializable {
 
@@ -17,6 +18,7 @@ public class UserRequest implements Serializable {
 
 	@NotNull
 	@NotBlank
+	@Size(max = 100)
 	private String name;
 
 	@NotNull
@@ -27,10 +29,12 @@ public class UserRequest implements Serializable {
 	@NotNull
 	@NotBlank
 	@Email
+	@Size(max = 100)
 	private String email;
 
 	@NotNull
 	@NotBlank
+	@Size(max = 100)
 	private String password;
 
 	@NotNull

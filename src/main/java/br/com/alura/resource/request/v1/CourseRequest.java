@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Pattern.Flag;
+import jakarta.validation.constraints.Size;
 
 public class CourseRequest implements Serializable {
 
@@ -13,6 +14,7 @@ public class CourseRequest implements Serializable {
 
 	@NotNull
 	@NotBlank
+	@Size(max = 255)
 	private String name;
 
 	@NotNull
@@ -25,6 +27,7 @@ public class CourseRequest implements Serializable {
 	@Pattern(regexp = "[a-z]{1,20}$", flags = Flag.CASE_INSENSITIVE)
 	private String instructorUsername;
 
+	@Size(max = 255)
 	private String description;
 
 	public String getName() {

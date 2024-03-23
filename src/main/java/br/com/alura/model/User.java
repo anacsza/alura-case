@@ -26,22 +26,27 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull
 	@NotBlank
 	private String name;
 
+	@NotNull
 	@NotBlank
 	private String username;
 
+	@NotNull
 	@NotBlank
 	private String email;
 
+	@NotNull
 	@NotBlank
 	private String password;
 
-	@Enumerated(EnumType.STRING)
 	@NotNull
+	@Enumerated(EnumType.STRING)
 	private UserRole role;
 
+	@NotNull
 	@Column(name = "insert_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
 	private LocalDateTime insertDate;
