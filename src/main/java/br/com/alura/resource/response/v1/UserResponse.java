@@ -18,24 +18,27 @@ public class UserResponse implements Serializable {
 		return name;
 	}
 
-	public void setName(String name) {
+	public UserResponse setName(String name) {
 		this.name = name;
+		return this;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public UserResponse setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 
 	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(UserRole role) {
+	public UserResponse setRole(UserRole role) {
 		this.role = role;
+		return this;
 	}
 
 }

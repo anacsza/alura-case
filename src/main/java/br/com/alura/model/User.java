@@ -1,7 +1,7 @@
 package br.com.alura.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user")
@@ -38,58 +39,68 @@ public class User implements Serializable {
 	private String password;
 
 	@Enumerated(EnumType.STRING)
-	@NotBlank
+	@NotNull
 	private UserRole role;
 
 	@Column(name = "insert_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
-	private LocalDate insertDate;
+	private LocalDateTime insertDate;
+
+	public User() {
+
+	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public User setName(String name) {
 		this.name = name;
+		return this;
 	}
 
 	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
+	public User setUsername(String username) {
 		this.username = username;
+		return this;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public User setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public User setPassword(String password) {
 		this.password = password;
+		return this;
 	}
 
 	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(UserRole role) {
+	public User setRole(UserRole role) {
 		this.role = role;
+		return this;
 	}
 
-	public LocalDate getInsertDate() {
+	public LocalDateTime getInsertDate() {
 		return insertDate;
 	}
 
-	public void setInsertDate(LocalDate insertDate) {
+	public User setInsertDate(LocalDateTime insertDate) {
 		this.insertDate = insertDate;
+		return this;
 	}
 }

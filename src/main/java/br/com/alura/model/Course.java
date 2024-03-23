@@ -1,7 +1,7 @@
 package br.com.alura.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "course")
@@ -36,75 +37,86 @@ public class Course implements Serializable {
 	private String description;
 
 	@Enumerated(EnumType.STRING)
-	@NotBlank
+	@NotNull
 	private CourseStatus status;
 
 	@Column(name = "insert_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
-	private LocalDate insertDate;
+	private LocalDateTime insertDate;
 
 	@Column(name = "inactivate_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
-	private LocalDate inactivateDate;
+	private LocalDateTime inactivateDate;
 
 	@OneToOne
 	@JoinColumn(referencedColumnName = "id", name = "user_id", nullable = false)
 	private User user;
 
+	public Course() {
+
+	}
+
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public Course setName(String name) {
 		this.name = name;
+		return this;
 	}
 
 	public String getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public Course setCode(String code) {
 		this.code = code;
+		return this;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public Course setDescription(String description) {
 		this.description = description;
+		return this;
 	}
 
 	public CourseStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(CourseStatus status) {
+	public Course setStatus(CourseStatus status) {
 		this.status = status;
+		return this;
 	}
 
-	public LocalDate getInsertDate() {
+	public LocalDateTime getInsertDate() {
 		return insertDate;
 	}
 
-	public void setInsertDate(LocalDate insertDate) {
+	public Course setInsertDate(LocalDateTime insertDate) {
 		this.insertDate = insertDate;
+		return this;
 	}
 
-	public LocalDate getInactivateDate() {
+	public LocalDateTime getInactivateDate() {
 		return inactivateDate;
 	}
 
-	public void setInactivateDate(LocalDate inactivateDate) {
+	public Course setInactivateDate(LocalDateTime inactivateDate) {
 		this.inactivateDate = inactivateDate;
+		return this;
 	}
 
 	public User getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public Course setUser(User user) {
 		this.user = user;
+		return this;
 	}
 
 }

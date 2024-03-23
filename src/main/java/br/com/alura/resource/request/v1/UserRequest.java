@@ -57,4 +57,10 @@ public class UserRequest implements Serializable {
 	public void setRole(UserRole role) {
 		this.role = role;
 	}
+
+	@Override
+	public String toString() {
+		return "UserRequest [name=" + name + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", role=" + role + "]";
+	}
 }

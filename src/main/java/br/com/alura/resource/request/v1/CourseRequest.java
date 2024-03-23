@@ -2,8 +2,6 @@ package br.com.alura.resource.request.v1;
 
 import java.io.Serializable;
 
-import br.com.alura.model.CourseStatus;
-
 public class CourseRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -15,8 +13,6 @@ public class CourseRequest implements Serializable {
 	private String instructorUsername;
 
 	private String description;
-
-	private CourseStatus status;
 
 	public String getName() {
 		return name;
@@ -50,11 +46,9 @@ public class CourseRequest implements Serializable {
 		this.description = description;
 	}
 
-	public CourseStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(CourseStatus status) {
-		this.status = status;
+	@Override
+	public String toString() {
+		return "CourseRequest [name=" + name + ", code=" + code + ", instructorUsername=" + instructorUsername
+				+ ", description=" + description + "]";
 	}
 }

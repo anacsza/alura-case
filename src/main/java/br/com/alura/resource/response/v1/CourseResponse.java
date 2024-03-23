@@ -1,8 +1,9 @@
 package br.com.alura.resource.response.v1;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import br.com.alura.model.Course;
 import br.com.alura.model.CourseStatus;
 
 public class CourseResponse implements Serializable {
@@ -17,9 +18,9 @@ public class CourseResponse implements Serializable {
 
 	private CourseStatus status;
 
-	private LocalDate insertDate;
+	private LocalDateTime insertDate;
 
-	private LocalDate inactivateDate;
+	private LocalDateTime inactivateDate;
 
 	private int nps;
 
@@ -27,55 +28,66 @@ public class CourseResponse implements Serializable {
 		return name;
 	}
 
-	public void setName(String name) {
+	public CourseResponse setName(String name) {
 		this.name = name;
+		return this;
 	}
 
 	public String getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public CourseResponse setCode(String code) {
 		this.code = code;
+		return this;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public CourseResponse setDescription(String description) {
 		this.description = description;
+		return this;
 	}
 
 	public CourseStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(CourseStatus status) {
+	public CourseResponse setStatus(CourseStatus status) {
 		this.status = status;
+		return this;
 	}
 
-	public LocalDate getInsertDate() {
+	public LocalDateTime getInsertDate() {
 		return insertDate;
 	}
 
-	public void setInsertDate(LocalDate insertDate) {
+	public CourseResponse setInsertDate(LocalDateTime insertDate) {
 		this.insertDate = insertDate;
+		return this;
 	}
 
-	public LocalDate getInactivateDate() {
+	public LocalDateTime getInactivateDate() {
 		return inactivateDate;
 	}
 
-	public void setInactivateDate(LocalDate inactivateDate) {
+	public CourseResponse setInactivateDate(LocalDateTime inactivateDate) {
 		this.inactivateDate = inactivateDate;
+		return this;
 	}
 
 	public int getNps() {
 		return nps;
 	}
 
-	public void setNps(int nps) {
+	public CourseResponse setNps(int nps) {
 		this.nps = nps;
+		return this;
+	}
+
+	public CourseResponse createCourseResponse(Course couse) {
+		return new CourseResponse();
 	}
 }

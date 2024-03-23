@@ -26,4 +26,9 @@ public class EnrollmentRequest implements Serializable {
 		this.code = code;
 	}
 
+	@Override
+	public String toString() {
+		return "EnrollmentRequest [username=" + username + ", code=" + code + "]";
+	}
+
 }

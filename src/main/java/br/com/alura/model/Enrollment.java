@@ -1,7 +1,7 @@
 package br.com.alura.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,7 +27,7 @@ public class Enrollment implements Serializable {
 
 	@Column(name = "enrollment_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
-	private LocalDate enrollmentDate;
+	private LocalDateTime enrollmentDate;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
@@ -37,27 +37,34 @@ public class Enrollment implements Serializable {
 	@JoinColumn(name = "course_id")
 	private Course course;
 
-	public LocalDate getEnrollmentDate() {
+	public Enrollment() {
+
+	}
+
+	public LocalDateTime getEnrollmentDate() {
 		return enrollmentDate;
 	}
 
-	public void setEnrollmentDate(LocalDate enrollmentDate) {
+	public Enrollment setEnrollmentDate(LocalDateTime enrollmentDate) {
 		this.enrollmentDate = enrollmentDate;
+		return this;
 	}
 
 	public User getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public Enrollment setUser(User user) {
 		this.user = user;
+		return this;
 	}
 
 	public Course getCourse() {
 		return course;
 	}
 
-	public void setCourse(Course course) {
+	public Enrollment setCourse(Course course) {
 		this.course = course;
+		return this;
 	}
 }

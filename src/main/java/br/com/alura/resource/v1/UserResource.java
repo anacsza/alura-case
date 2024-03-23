@@ -9,7 +9,6 @@ import java.net.URISyntaxException;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,18 +32,17 @@ public class UserResource {
 	private UserService userService;
 
 	@PostMapping
-	public BodyBuilder createUser(@Valid @RequestBody UserRequest userRequest) throws URISyntaxException {
-		LOGGER.info("createUser name={}", userRequest.getName());
+	public ResponseEntity<?> createUser(@Valid @RequestBody UserRequest userRequest) throws URISyntaxException {
+		LOGGER.info("createUser name={}", userRequest.toString());
 		userService.createUser(userRequest);
-		return ResponseEntity.created(new URI("v1/users?username=" + userRequest.getUsername()));
+		return ResponseEntity.created(new URI("v1/users?username=" + userRequest.getUsername())).build();
 	}
 
 	@GetMapping
 	public ResponseEntity<BaseResponse<UserResponse>> getUser(@Valid @RequestParam String username) {
 		LOGGER.info("getUser name={}", username);
 		UserResponse userResponse = userService.getUser(username);
-		BaseResponse<UserResponse> baseResponse = new BaseResponse<>(userResponse);
-		return ResponseEntity.ok(baseResponse);
+		return ResponseEntity.ok(new BaseResponse<>(userResponse));
 	}
 
 }
