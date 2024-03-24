@@ -3,7 +3,6 @@ package br.com.alura.resource.response.v1;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import br.com.alura.model.Course;
 import br.com.alura.model.CourseStatus;
 
 public class CourseResponse implements Serializable {
@@ -21,8 +20,6 @@ public class CourseResponse implements Serializable {
 	private LocalDateTime insertDate;
 
 	private LocalDateTime inactivateDate;
-
-	private int nps;
 
 	public String getName() {
 		return name;
@@ -76,18 +73,5 @@ public class CourseResponse implements Serializable {
 	public CourseResponse setInactivateDate(LocalDateTime inactivateDate) {
 		this.inactivateDate = inactivateDate;
 		return this;
-	}
-
-	public int getNps() {
-		return nps;
-	}
-
-	public CourseResponse setNps(int nps) {
-		this.nps = nps;
-		return this;
-	}
-
-	public CourseResponse createCourseResponse(Course couse) {
-		return new CourseResponse();
 	}
 }

@@ -37,7 +37,7 @@ public class CourseHelper {
 	public static CourseResponse createCourseResponse(Course course) {
 		return new CourseResponse().setCode(course.getCode()).setDescription(course.getDescription())
 				.setName(course.getName()).setInsertDate(course.getInsertDate())
-				.setInactivateDate(course.getInactivateDate()).setStatus(course.getStatus()).setNps(0);
+				.setInactivateDate(course.getInactivateDate()).setStatus(course.getStatus());
 	}
 
 	public void validateUserRequest(CourseRequest courseRequest) {

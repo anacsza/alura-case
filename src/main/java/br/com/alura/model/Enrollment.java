@@ -46,6 +46,10 @@ public class Enrollment implements Serializable {
 	@Column(name = "score_description")
 	private String scoreDescription;
 
+	private int enrollments;
+
+	private int nps;
+
 	public Enrollment() {
 
 	}
@@ -92,6 +96,24 @@ public class Enrollment implements Serializable {
 
 	public Enrollment setScoreDescription(String scoreDescription) {
 		this.scoreDescription = scoreDescription;
+		return this;
+	}
+
+	public int getEnrollments() {
+		return enrollments;
+	}
+
+	public Enrollment setEnrollments(int enrollments) {
+		this.enrollments = enrollments;
+		return this;
+	}
+
+	public int getNps() {
+		return nps;
+	}
+
+	public Enrollment setNps(int nps) {
+		this.nps = nps;
 		return this;
 	}
 }

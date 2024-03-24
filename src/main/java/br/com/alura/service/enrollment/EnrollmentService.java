@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,12 +16,15 @@ import br.com.alura.helper.enrollment.EnrollmentHelper;
 import br.com.alura.model.Course;
 import br.com.alura.model.CourseStatus;
 import br.com.alura.model.Enrollment;
+import br.com.alura.model.EnrollmentProjection;
 import br.com.alura.model.User;
 import br.com.alura.repository.course.CourseRepository;
 import br.com.alura.repository.enrollment.EnrollmentRepository;
 import br.com.alura.repository.user.UserRepository;
 import br.com.alura.resource.request.v1.EnrollmentRequest;
 import br.com.alura.resource.request.v1.EnrollmentScoreRequest;
+import br.com.alura.resource.response.v1.EnrollmentResponse;
+import br.com.alura.sender.EmailSender;
 
 @Service
 public class EnrollmentService {
@@ -36,6 +41,9 @@ public class EnrollmentService {
 
 	@Autowired
 	private EnrollmentHelper enrollmentHelper;
+
+	@Autowired
+	private EmailSender emailSender;
 
 	public void createEnrollment(EnrollmentRequest enrollmentRequest) {
 		LOGGER.info("createEnrollment username={}", enrollmentRequest.getUsername());
@@ -76,12 +84,21 @@ public class EnrollmentService {
 		enrollmentFounded.get().setScore(enrollmentScoreRequest.getScore());
 		enrollmentFounded.get().setScoreDescription(enrollmentScoreRequest.getScoreDescription());
 		enrollmentRepository.save(enrollmentFounded.get());
-		sendFeedbackEmail(enrollmentFounded.get());
+		emailSender.send(enrollmentFounded.get().getCourse().getUser().getEmail(),
+				"Feedback Curso " + enrollmentFounded.get().getCourse().getName(),
+				"Você recebeu a nota: " + enrollmentFounded.get().getScore() + " devido ao motivo: "
+						+ enrollmentFounded.get().getScoreDescription());
 	}
 
-	private void sendFeedbackEmail(Enrollment enrollment) {
-		LOGGER.info("Simulating sending email to [%s]:\n".formatted(enrollment.getCourse().getUser().getEmail()));
-		LOGGER.info("Subject: %s Body: %s".formatted(enrollment.getCourse().getUser().getEmail(),
-				enrollment.getScoreDescription()));
+	public Page<EnrollmentResponse> getEnrollment(int qtdeEnrollmentCourse, CourseStatus courseStatus, int limit,
+			int page) {
+		LOGGER.info("getEnrollment qtdeEnrollmentCourse={} page={} limit={}", qtdeEnrollmentCourse, page, limit);
+		Page<EnrollmentProjection> enrollmentList = enrollmentRepository
+				.findByStatusGroupByNameDescriptionStatusOrderByEnrollmentCourses(qtdeEnrollmentCourse,
+						courseStatus.name(), PageRequest.of(page, limit));
+		LOGGER.info("enrollmentList qtdeEnrollmentCourse={} page={} limit={}", enrollmentList.getTotalElements(), page,
+				limit);
+		return enrollmentHelper.createEnrollmentResponse(enrollmentList);
 	}
+
 }
