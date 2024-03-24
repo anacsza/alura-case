@@ -22,8 +22,6 @@ import br.com.alura.resource.response.v1.CourseResponse;
 @Service
 public class CourseService {
 
-	private static final Logger LOGGER = getLogger(CourseService.class);
-
 	@Autowired
 	private CourseRepository courseRepository;
 
@@ -34,21 +32,18 @@ public class CourseService {
 	private CourseHelper courseHelper;
 
 	public void createCourse(CourseRequest courseRequest) {
-		LOGGER.info("createCourse name={}", courseRequest.getName());
 		courseHelper.validateUserRequest(courseRequest);
-		Optional<User> userFounded = userRepository.findByUsername(courseRequest.getInstructorUsername());
-		Optional<Course> courseFounded = courseRepository.findByCode(courseRequest.getCode());
-		courseRepository.save(courseHelper.createCourse(courseRequest, userFounded, courseFounded));
+		Optional<User> userFound = userRepository.findByUsername(courseRequest.getInstructorUsername());
+		Optional<Course> courseFound = courseRepository.findByCode(courseRequest.getCode());
+		courseRepository.save(courseHelper.createCourse(courseRequest, userFound, courseFound));
 	}
 
 	public void changeCourseStatus(String code) {
-		LOGGER.info("changeCourseStatus code={}", code);
 		Optional<Course> course = courseRepository.findByCode(code);
 		courseRepository.save(courseHelper.updateCourseStatus(course));
 	}
 
 	public Page<CourseResponse> getCourseList(CourseStatus status, int page, int limit) {
-		LOGGER.info("getCourseList status={}", status);
 		Page<Course> courseList = courseRepository.findByStatus(status, PageRequest.of(page, limit));
 		return courseHelper.createCourseResponse(courseList);
 	}

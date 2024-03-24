@@ -2,6 +2,7 @@ package br.com.alura.resource.request.v1;
 
 import java.io.Serializable;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -15,16 +16,19 @@ public class CourseRequest implements Serializable {
 	@NotNull
 	@NotBlank
 	@Size(max = 255)
+	@Schema(example = "Spring Boot")
 	private String name;
 
 	@NotNull
 	@NotBlank
 	@Pattern(regexp = "^[a-zA-Z]+(?:-[a-zA-Z]+){0,9}$", flags = Flag.CASE_INSENSITIVE)
+	@Schema(example = "spring-boot")
 	private String code;
 
 	@NotNull
 	@NotBlank
 	@Pattern(regexp = "[a-z]{1,20}$", flags = Flag.CASE_INSENSITIVE)
+	@Schema(example = "ana")
 	private String instructorUsername;
 
 	@Size(max = 255)

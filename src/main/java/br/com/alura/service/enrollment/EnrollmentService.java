@@ -28,7 +28,6 @@ import br.com.alura.sender.EmailSender;
 
 @Service
 public class EnrollmentService {
-	private static final Logger LOGGER = getLogger(EnrollmentService.class);
 
 	@Autowired
 	private EnrollmentRepository enrollmentRepository;
@@ -46,7 +45,6 @@ public class EnrollmentService {
 	private EmailSender emailSender;
 
 	public void createEnrollment(EnrollmentRequest enrollmentRequest) {
-		LOGGER.info("createEnrollment username={}", enrollmentRequest.getUsername());
 		Optional<User> user = userRepository.findByUsername(enrollmentRequest.getUsername());
 		if (user.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrato");
@@ -58,8 +56,8 @@ public class EnrollmentService {
 		if (course.get().getStatus().equals(CourseStatus.INACTIVE)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Matricula não permitida, curso inativo");
 		}
-		Optional<Enrollment> enrollmentFounded = enrollmentRepository.findByUserAndCourse(user.get(), course.get());
-		if (enrollmentFounded.isPresent()) {
+		Optional<Enrollment> enrollmentFound = enrollmentRepository.findByUserAndCourse(user.get(), course.get());
+		if (enrollmentFound.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 					"Usuario não pode matricular-se em mais de um curso");
 		}
@@ -67,7 +65,6 @@ public class EnrollmentService {
 	}
 
 	public void createEnrollmentScore(EnrollmentScoreRequest enrollmentScoreRequest) {
-		LOGGER.info("createEnrollmentScore enrollmentScoreRequest={}", enrollmentScoreRequest.toString());
 		enrollmentHelper.validateEnrollmentRequest(enrollmentScoreRequest);
 		Optional<User> user = userRepository.findByUsername(enrollmentScoreRequest.getUsername());
 		if (user.isEmpty()) {
@@ -77,27 +74,24 @@ public class EnrollmentService {
 		if (course.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrato");
 		}
-		Optional<Enrollment> enrollmentFounded = enrollmentRepository.findByUserAndCourse(user.get(), course.get());
-		if (enrollmentFounded.isEmpty()) {
+		Optional<Enrollment> enrollmentFound = enrollmentRepository.findByUserAndCourse(user.get(), course.get());
+		if (enrollmentFound.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Matrícula não encontrada");
 		}
-		enrollmentFounded.get().setScore(enrollmentScoreRequest.getScore());
-		enrollmentFounded.get().setScoreDescription(enrollmentScoreRequest.getScoreDescription());
-		enrollmentRepository.save(enrollmentFounded.get());
-		emailSender.send(enrollmentFounded.get().getCourse().getUser().getEmail(),
-				"Feedback Curso " + enrollmentFounded.get().getCourse().getName(),
-				"Você recebeu a nota: " + enrollmentFounded.get().getScore() + " devido ao motivo: "
-						+ enrollmentFounded.get().getScoreDescription());
+		enrollmentFound.get().setScore(enrollmentScoreRequest.getScore());
+		enrollmentFound.get().setScoreDescription(enrollmentScoreRequest.getScoreDescription());
+		enrollmentRepository.save(enrollmentFound.get());
+		emailSender.send(enrollmentFound.get().getCourse().getUser().getEmail(),
+				"Feedback Curso " + enrollmentFound.get().getCourse().getName(),
+				"Você recebeu a nota: " + enrollmentFound.get().getScore() + " devido ao motivo: "
+						+ enrollmentFound.get().getScoreDescription());
 	}
 
 	public Page<EnrollmentResponse> getEnrollment(int qtdeEnrollmentCourse, CourseStatus courseStatus, int limit,
 			int page) {
-		LOGGER.info("getEnrollment qtdeEnrollmentCourse={} page={} limit={}", qtdeEnrollmentCourse, page, limit);
 		Page<EnrollmentProjection> enrollmentList = enrollmentRepository
 				.findByStatusGroupByNameDescriptionStatusOrderByEnrollmentCourses(qtdeEnrollmentCourse,
 						courseStatus.name(), PageRequest.of(page, limit));
-		LOGGER.info("enrollmentList qtdeEnrollmentCourse={} page={} limit={}", enrollmentList.getTotalElements(), page,
-				limit);
 		return enrollmentHelper.createEnrollmentResponse(enrollmentList);
 	}
 

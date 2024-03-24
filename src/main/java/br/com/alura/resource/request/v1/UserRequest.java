@@ -3,6 +3,7 @@ package br.com.alura.resource.request.v1;
 import java.io.Serializable;
 
 import br.com.alura.model.UserRole;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
@@ -19,26 +20,31 @@ public class UserRequest implements Serializable {
 	@NotNull
 	@NotBlank
 	@Size(max = 100)
+	@Schema(example = "Ana")
 	private String name;
 
 	@NotNull
 	@NotBlank
 	@Pattern(regexp = "[a-z]{1,20}$", flags = Flag.CASE_INSENSITIVE)
+	@Schema(example = "ana")
 	private String username;
 
 	@NotNull
 	@NotBlank
 	@Email
 	@Size(max = 100)
+	@Schema(example = "ana@gmail.com")
 	private String email;
 
 	@NotNull
 	@NotBlank
 	@Size(max = 100)
+	@Schema(example = "123456789@qwerty")
 	private String password;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
+	@Schema(example = "STUDENT")
 	private UserRole role;
 
 	public String getName() {

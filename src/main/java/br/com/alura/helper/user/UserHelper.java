@@ -49,8 +49,8 @@ public class UserHelper {
 		}
 	}
 
-	public User createUser(UserRequest userRequest, Optional<User> userFounded) throws NoSuchAlgorithmException {
-		if (userFounded.isPresent()) {
+	public User createUser(UserRequest userRequest, Optional<User> userFound) throws NoSuchAlgorithmException {
+		if (userFound.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já cadastrado");
 		}
 		String password = DigestUtil.convertPassword(userRequest.getPassword());

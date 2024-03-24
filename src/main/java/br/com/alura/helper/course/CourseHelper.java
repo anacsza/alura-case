@@ -54,14 +54,14 @@ public class CourseHelper {
 	}
 
 	public Course createCourse(CourseRequest courseRequest, Optional<User> userInstructor,
-			Optional<Course> courseFounded) {
+			Optional<Course> courseFound) {
 		if (userInstructor.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrato");
 		}
 		if (userInstructor.get().getRole() != UserRole.INSTRUCTOR) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não é instrutor");
 		}
-		if (courseFounded.isPresent()) {
+		if (courseFound.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Código de curso já cadastrado");
 		}
 		return new Course().setCode(courseRequest.getCode()).setDescription(courseRequest.getDescription())

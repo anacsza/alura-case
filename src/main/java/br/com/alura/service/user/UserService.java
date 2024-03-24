@@ -18,8 +18,6 @@ import br.com.alura.resource.response.v1.UserResponse;
 @Service
 public class UserService {
 
-	private static final Logger LOGGER = getLogger(UserService.class);
-
 	@Autowired
 	private UserRepository userRepository;
 
@@ -27,15 +25,13 @@ public class UserService {
 	private UserHelper userHelper;
 
 	public void createUser(UserRequest userRequest) throws NoSuchAlgorithmException {
-		LOGGER.info("createUser name={}", userRequest.getName());
 		userHelper.validateUserRequest(userRequest);
-		Optional<User> userFounded = userRepository.findByUsernameOrEmail(userRequest.getUsername(),
+		Optional<User> userFound = userRepository.findByUsernameOrEmail(userRequest.getUsername(),
 				userRequest.getEmail());
-		userRepository.save(userHelper.createUser(userRequest, userFounded));
+		userRepository.save(userHelper.createUser(userRequest, userFound));
 	}
 
 	public UserResponse getUser(String username) {
-		LOGGER.info("getUser name={}", username);
 		Optional<User> user = userRepository.findByUsername(username);
 		return userHelper.createUserResponse(user);
 	}

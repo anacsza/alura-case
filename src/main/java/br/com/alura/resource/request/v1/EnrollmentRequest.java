@@ -2,6 +2,7 @@ package br.com.alura.resource.request.v1;
 
 import java.io.Serializable;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -14,11 +15,13 @@ public class EnrollmentRequest implements Serializable {
 	@NotNull
 	@NotBlank
 	@Pattern(regexp = "[a-z]{1,20}$", flags = Flag.CASE_INSENSITIVE)
+	@Schema(example = "ana")
 	private String username;
 
 	@NotNull
 	@NotBlank
 	@Pattern(regexp = "^[a-zA-Z]+(?:-[a-zA-Z]+){0,9}$", flags = Flag.CASE_INSENSITIVE)
+	@Schema(example = "spring-boot")
 	private String code;
 
 	public String getUsername() {

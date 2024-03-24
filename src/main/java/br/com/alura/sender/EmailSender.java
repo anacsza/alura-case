@@ -10,7 +10,7 @@ public class EmailSender {
 	private static final Logger LOGGER = getLogger(EmailSender.class);
 
 	public void send(String recipientEmail, String subject, String body) {
-		LOGGER.info("Simulating sending email to [%s]:\n".formatted(recipientEmail));
+		LOGGER.info("Simulating sending email to [%s]:".formatted(recipientEmail));
 		LOGGER.info("Subject: %s Body: %s".formatted(subject, body));
 	}
 }
