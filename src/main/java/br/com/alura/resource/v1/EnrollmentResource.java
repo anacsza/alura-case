@@ -48,7 +48,8 @@ public class EnrollmentResource {
 					@Content(mediaType = "application/json") }) })
 	@PostMapping
 	public ResponseEntity<?> createEnrollment(@Valid @RequestBody EnrollmentRequest enrollmentRequest) {
-		LOGGER.info("createEnrollment code={} username={}", enrollmentRequest.getCode(), enrollmentRequest.getUsername());
+		LOGGER.info("createEnrollment code={} username={}", enrollmentRequest.getCode(),
+				enrollmentRequest.getUsername());
 		enrollmentService.createEnrollment(enrollmentRequest);
 		return ResponseEntity.ok().build();
 	}
@@ -63,7 +64,8 @@ public class EnrollmentResource {
 					@Content(mediaType = "application/json") }) })
 	@PostMapping(path = "/feedbacks")
 	public ResponseEntity<?> createEnrollmentScore(@Valid @RequestBody EnrollmentScoreRequest enrollmentScoreRequest) {
-		LOGGER.info("createEnrollmentScore code={} username={}", enrollmentScoreRequest.getCode(), enrollmentScoreRequest.getUsername());
+		LOGGER.info("createEnrollmentScore code={} username={}", enrollmentScoreRequest.getCode(),
+				enrollmentScoreRequest.getUsername());
 		enrollmentService.createEnrollmentScore(enrollmentScoreRequest);
 		return ResponseEntity.ok().build();
 	}

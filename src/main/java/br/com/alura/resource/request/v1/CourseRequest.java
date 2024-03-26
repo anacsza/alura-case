@@ -38,32 +38,36 @@ public class CourseRequest implements Serializable {
 		return name;
 	}
 
-	public void setName(String name) {
+	public CourseRequest setName(String name) {
 		this.name = name;
+		return this;
 	}
 
 	public String getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public CourseRequest setCode(String code) {
 		this.code = code;
+		return this;
 	}
 
 	public String getInstructorUsername() {
 		return instructorUsername;
 	}
 
-	public void setInstructorUsername(String instructorUsername) {
+	public CourseRequest setInstructorUsername(String instructorUsername) {
 		this.instructorUsername = instructorUsername;
+		return this;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public CourseRequest setDescription(String description) {
 		this.description = description;
+		return this;
 	}
 
 	@Override

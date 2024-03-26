@@ -51,40 +51,45 @@ public class UserRequest implements Serializable {
 		return name;
 	}
 
-	public void setName(String name) {
+	public UserRequest setName(String name) {
 		this.name = name;
+		return this;
 	}
 
 	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
+	public UserRequest setUsername(String username) {
 		this.username = username;
+		return this;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public UserRequest setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public UserRequest setPassword(String password) {
 		this.password = password;
+		return this;
 	}
 
 	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(UserRole role) {
+	public UserRequest setRole(UserRole role) {
 		this.role = role;
+		return this;
 	}
 
 	@Override

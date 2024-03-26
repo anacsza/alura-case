@@ -41,10 +41,9 @@ public class UserResource {
 	private UserService userService;
 
 	@Operation(summary = "Register user")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "201", description = "Course successfully registered", headers = {
-					@Header(name = "location", description = "The URI returns the resource", schema = @Schema(type = "string")) }, content = {
-							@Content(mediaType = "application/json") }),
+	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "User successfully registered", headers = {
+			@Header(name = "location", description = "The URI returns the resource", schema = @Schema(type = "string")) }, content = {
+					@Content(mediaType = "application/json") }),
 			@ApiResponse(responseCode = "400", description = "Invalid request", content = {
 					@Content(mediaType = "application/json") }),
 			@ApiResponse(responseCode = "500", description = "Internal server error", content = {

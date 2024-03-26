@@ -28,16 +28,18 @@ public class EnrollmentRequest implements Serializable {
 		return username;
 	}
 
-	public void setUsername(String username) {
+	public EnrollmentRequest setUsername(String username) {
 		this.username = username;
+		return this;
 	}
 
 	public String getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public EnrollmentRequest setCode(String code) {
 		this.code = code;
+		return this;
 	}
 
 	@Override
