@@ -12,14 +12,8 @@ For building and running the application you need:
 
 ## Running the application locally
 
-### Expose the MySQL Database
 ```shell
 docker compose up -d
-```
-
-### Running aplication
-```shell
-mvn spring-boot:run
 ```
 
 ## Postman Collection

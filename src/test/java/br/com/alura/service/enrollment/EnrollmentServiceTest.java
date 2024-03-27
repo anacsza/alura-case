@@ -140,7 +140,6 @@ public class EnrollmentServiceTest {
 		when(courseRepository.findByCode(anyString())).thenReturn(course);
 		when(enrollmentRepository.findByUserAndCourse(any(), any())).thenReturn(enrollmentFound);
 		doNothing().when(enrollmentRepository).save(any());
-		doNothing().when(emailSender).send(any(), any(), any());
 		// Act
 		// Assert
 		assertDoesNotThrow(() -> {
