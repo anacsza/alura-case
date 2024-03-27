@@ -12,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -19,7 +20,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "course")
+@Table(name = "course", indexes = {
+        @Index(name = "code", columnList = "code"),
+        @Index(name = "user_id", columnList = "user_id"),
+        @Index(name = "idx_status", columnList = "status")
+})
 public class Course implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -11,13 +11,17 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "enrollment")
+@Table(name = "enrollment", indexes = {
+        @Index(name = "course_id", columnList = "course_id"),
+        @Index(name = "user_id", columnList = "user_id")
+})
 public class Enrollment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
