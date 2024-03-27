@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0.36-debian
+    command: --innodb-use-native-aio=0
+    container_name: db
+    restart: always
+    tty: true
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=alura
+      - MYSQL_ROOT_PASSWORD=alura
+      - MYSQL_USER=alura
+      - MYSQL_PASSWORD=alura
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+
+volumes:
+  mysql:
