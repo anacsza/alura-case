@@ -1,6 +1,9 @@
 package br.com.alura.service.enrollment;
 
+import static java.util.ResourceBundle.getBundle;
+
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,14 +44,16 @@ public class EnrollmentService {
 	@Autowired
 	private EmailSender emailSender;
 
+	private ResourceBundle resourceBundle = getBundle("messages");
+
 	public void createEnrollment(EnrollmentRequest enrollmentRequest) {
 		Optional<User> user = userRepository.findByUsername(enrollmentRequest.getUsername());
 		if (user.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrato");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
 		}
 		Optional<Course> course = courseRepository.findByCode(enrollmentRequest.getCode());
 		if (course.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrato");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrado");
 		}
 		if (course.get().getStatus().equals(CourseStatus.INACTIVE)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Matricula não permitida, curso inativo");
@@ -65,11 +70,11 @@ public class EnrollmentService {
 		enrollmentHelper.validateEnrollmentRequest(enrollmentScoreRequest);
 		Optional<User> user = userRepository.findByUsername(enrollmentScoreRequest.getUsername());
 		if (user.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrato");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
 		}
 		Optional<Course> course = courseRepository.findByCode(enrollmentScoreRequest.getCode());
 		if (course.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrato");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Curso não encontrado");
 		}
 		Optional<Enrollment> enrollmentFound = enrollmentRepository.findByUserAndCourse(user.get(), course.get());
 		if (enrollmentFound.isEmpty()) {
@@ -78,10 +83,12 @@ public class EnrollmentService {
 		enrollmentFound.get().setScore(enrollmentScoreRequest.getScore());
 		enrollmentFound.get().setScoreDescription(enrollmentScoreRequest.getScoreDescription());
 		enrollmentRepository.save(enrollmentFound.get());
-		emailSender.send(enrollmentFound.get().getCourse().getUser().getEmail(),
-				"Feedback Curso " + enrollmentFound.get().getCourse().getName(),
-				"Você recebeu a nota: " + enrollmentFound.get().getScore() + " devido ao motivo: "
-						+ enrollmentFound.get().getScoreDescription());
+		if (enrollmentScoreRequest.getScore() < 6) {
+			emailSender.send(course.get().getUser().getEmail(),
+					String.format(resourceBundle.getString("email.subject"), course.get().getName()),
+					String.format(resourceBundle.getString("email.body"), enrollmentScoreRequest.getScore(),
+							enrollmentScoreRequest.getScoreDescription()));
+		}
 	}
 
 	public Page<EnrollmentResponse> getEnrollment(int qtdeEnrollmentCourse, CourseStatus courseStatus, int limit,

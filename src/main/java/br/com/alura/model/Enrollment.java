@@ -18,10 +18,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "enrollment", indexes = {
-        @Index(name = "course_id", columnList = "course_id"),
-        @Index(name = "user_id", columnList = "user_id")
-})
+@Table(name = "enrollment", indexes = { @Index(name = "course_id", columnList = "course_id"),
+		@Index(name = "user_id", columnList = "user_id") })
 public class Enrollment implements Serializable {
 
 	private static final long serialVersionUID = 1L;

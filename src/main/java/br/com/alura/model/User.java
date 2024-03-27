@@ -18,10 +18,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "user", indexes = {
-        @Index(name = "email", columnList = "email"),
-        @Index(name = "username", columnList = "username")
-})
+@Table(name = "user", indexes = { @Index(name = "email", columnList = "email"),
+		@Index(name = "username", columnList = "username") })
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;

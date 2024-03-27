@@ -33,7 +33,7 @@ public class UserHelper {
 			return new UserResponse().setName(user.get().getName()).setEmail(user.get().getEmail())
 					.setRole(user.get().getRole());
 		}
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrato");
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
 	}
 
 	public void validateUserRequest(UserRequest userRequest) {

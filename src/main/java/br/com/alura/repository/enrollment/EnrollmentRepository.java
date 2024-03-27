@@ -26,7 +26,8 @@ public interface EnrollmentRepository extends PagingAndSortingRepository<Enrollm
 			+ "SUM(CASE WHEN e.score < 6 THEN 1 ELSE 0 END) / COUNT(e.course_id) * 100) AS nps, " + "c.code, "
 			+ "c.name, " + "c.description, "
 			+ "CASE WHEN c.status = 'ACTIVE' THEN 'Ativo' ELSE 'Inativo' END AS courseStatus " + "FROM enrollment e "
-			+ "INNER JOIN course c ON c.id = e.course_id " + "WHERE c.status = :status " + "GROUP BY e.course_id "
+			+ "INNER JOIN course c ON c.id = e.course_id "
+			+ "WHERE c.status = :status AND e.score_description IS NOT NULL " + "GROUP BY e.course_id "
 			+ "HAVING enrollments >= :qtdeEnrollmentCourse "
 			+ "ORDER BY enrollments DESC, nps DESC, c.name ASC", nativeQuery = true)
 	Page<EnrollmentProjection> findByStatusGroupByNameDescriptionStatusOrderByEnrollmentCourses(
